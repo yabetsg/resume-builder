@@ -1,27 +1,39 @@
 import React, { Component } from "react";
 
 import uniqid from "uniqid";
+import Field from "./Field";
 
-export default class Personal extends Component{
+export default class Personal extends Component {
+  constructor(props) {
+    super(props);
+  }
 
-    constructor(props){
-        super(props);
-     
-    }
-
-  
-    render(){
-        const {onChange, onSubmit} = this.props;
-        return(
-           <section>
-                <form onSubmit={onSubmit}>
-                <header> Personal Details</header>
-                <input placeholder="Name" className="name" onChange={onChange}></input>
-                <input placeholder="Email" className="email"  onChange={onChange}></input>
-                <input placeholder="Phone Number" className="phone"  onChange={onChange}></input>
-                <button type="submit">Add</button>
-                </form>
-           </section>
-        );
-    }
+  render() {
+    const { onChange, onSubmit, nameValue, emailValue, phoneValue, currentTitleValue, summaryValue } =
+      this.props;
+    return (
+      <section>
+        <Field
+          header = "Peronal Details"
+          placeholder1="Name"
+          placeholder2="Email"
+          placeholder3="Phone"
+          placeholder4="Current title"
+          placeholder5="Summary"
+          className1="name"
+          className2="email"
+          className3="phone"
+          className4="current-title"
+          className5="summary"
+          onChange={onChange}
+          onSubmit={onSubmit}
+          value1={nameValue}
+          value2={emailValue}
+          value3={phoneValue}
+          value4={currentTitleValue}
+          value5={summaryValue}
+        ></Field>
+      </section>
+    );
+  }
 }
