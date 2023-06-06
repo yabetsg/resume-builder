@@ -14,9 +14,12 @@ export default class App extends Component {
       inputs: {
         personal: [],
       },
+      class:{experienceClass:'experience-add-btn'},
+      enable:{experience:'disable'}
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.remove = this.remove.bind(this);
   }
 
   onChange(e) {
@@ -110,16 +113,29 @@ export default class App extends Component {
       },
       input: { name: "", email: "", phone: "", currentTitle: "", summary: "" },
     });
-    console.log();
+  
+    if(e.target.className === 'experience-add-btn'){
+        this.setState({
+          enable:{experience:'enable'}
+        })
+    }
+    
+  }
 
-    console.log(this.state);
+  remove(e){
+   
+    if(e.target.className === 'enable'){
+      this.setState({
+        enable:{experience:'disable'}
+      })
+  }
   }
   render() {
     const { name, email, phone, currentTitle, summary } = this.state.input;
     return (
       <>
         <Personal
-          onSubmit={this.onSubmit}
+          addButtonEvent={this.onSubmit}
           onChange={this.onChange}
           nameValue={name}
           emailValue={email}
@@ -127,14 +143,22 @@ export default class App extends Component {
           currentTitleValue={currentTitle}
           summaryValue={summary}
         ></Personal>
-        <PersonalOverview inputs={this.state.inputs}></PersonalOverview>
+
+       {/* <PersonalOverview inputs={this.state.inputs}></PersonalOverview> */}
         <Experience
-          onSubmit={this.onSubmit}
+          addButtonEvent={this.onSubmit}
+          removeButtonEvent = {this.remove}
           onChange={this.onChange}
+          containerClass = {this.state.enable.experience}
+          buttonClass = {this.state.class.experienceClass}
+
+          removeButtonClass = {this.state.enable.experience}
         ></Experience>
+
         <Education
-          onSubmit={this.onSubmit}
+          addButtonEvent={this.onSubmit}
           onChange={this.onChange}
+          containerClass = "disable"
         ></Education>
       </>
     );

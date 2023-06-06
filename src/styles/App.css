@@ -36,3 +36,27 @@
     transform: rotate(360deg);
   }
 } */
+#root{
+  display: flex;
+  flex-direction: column;
+}
+.personal-details{
+  width: 100px;
+}
+.experience{
+  width: 100px;
+
+}
+.education{
+  width: 100px;
+
+}
+header{
+  width: 150px;
+}
+.disable{
+  display: none;
+}
+.enable{
+  display: block;
+}

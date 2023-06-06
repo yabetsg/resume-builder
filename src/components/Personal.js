@@ -12,7 +12,7 @@ export default class Personal extends Component {
     const { onChange, onSubmit, nameValue, emailValue, phoneValue, currentTitleValue, summaryValue } =
       this.props;
     return (
-      <section>
+      <section className="personal-details">
         <Field
           header = "Peronal Details"
           placeholder1="Name"
@@ -32,6 +32,8 @@ export default class Personal extends Component {
           value3={phoneValue}
           value4={currentTitleValue}
           value5={summaryValue}
+          buttonClass = "disable"
+          removeButtonClass = "disable"
         ></Field>
       </section>
     );
