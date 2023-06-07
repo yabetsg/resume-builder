@@ -1,15 +1,26 @@
 import { Component } from "react";
 import Field from "./Field";
-
+import uniqid from 'uniqid';
 export default class Experience extends Component {
   constructor(props) {
     super(props);
   }
   render() {
-    const { onChange, addButtonEvent, removeButtonEvent, className1, className2, className3, className4, className5,containerClass,buttonClass, removeButtonClass } = this.props;
+    const { onChange,id, addButtonEvent, removeButtonEvent, className1, className2, className3, className4, className5,containerClass,buttonClass, removeButtonClass , child, initialClickEvent} = this.props;
     return (
-      <section className="experience ">
-        <Field
+      <section   className="experience ">
+        <div >Work Experience</div>
+         <button className = {className1} type="button" onClick={initialClickEvent}>Add</button>
+          {child.map((element,index)=>{
+            return <section id={index} className="group" key={uniqid()}>{element}</section>
+          })}
+       
+        
+      </section>
+    );
+  }
+}
+{/* <Field
           header="Work Experience"
           placeholder1="Company Name"
           placeholder2="Position"
@@ -28,8 +39,4 @@ export default class Experience extends Component {
           addButtonEvent={addButtonEvent}
           removeButtonEvent = {removeButtonEvent}
          
-        ></Field>
-      </section>
-    );
-  }
-}
+        ></Field> */}

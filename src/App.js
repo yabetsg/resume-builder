@@ -5,6 +5,8 @@ import React, { Component, useRef } from "react";
 import PersonalOverview from "./components/PersonalOverview";
 import Experience from "./components/Experience";
 import Education from "./components/Education";
+import Field from "./components/Field";
+import uniqid from 'uniqid';
 
 export default class App extends Component {
   constructor(props) {
@@ -15,11 +17,14 @@ export default class App extends Component {
         personal: [],
       },
       class:{experienceClass:'experience-add-btn'},
-      enable:{experience:'disable'}
+      enable:{experience:'enable'},
+      childs: {experience:[]}
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.remove = this.remove.bind(this);
+    this.removeExperience = this.removeExperience.bind(this);
+    this.addExperience = this.addExperience.bind(this);
+    
   }
 
   onChange(e) {
@@ -97,6 +102,33 @@ export default class App extends Component {
       }
     }
   }
+    removeExperience(e){
+      const sectionId = e.target.parentNode.parentNode.parentNode.parentNode.id;
+     // console.log(e.target.parentNode.parentNode.parentNode.parentNode.id);  
+      this.setState({
+        childs:{experience:this.state.childs.experience.filter((_,index)=>sectionId!=index)}
+      })
+      
+      if(this.state.childs.experience.length === 1){
+        this.setState({
+          enable:{experience:'enable'}
+        })
+      }
+    console.log(this.state.childs.experience);
+  }
+
+  addExperience(e){
+    this.setState({
+      childs:{experience:this.state.childs.experience.concat(<Field  placeholder1="Company Name"
+      placeholder2="Position" placeholder3="Date From"
+      placeholder4="Date Until"
+      placeholder5="Details"  clickEvent = {this.addExperience} removeButtonEvent = {this.removeExperience}></Field>)},
+
+      enable:{experience:'disable'}
+    })
+  
+   
+  }
   onSubmit(e) {
     const { name, email, phone, currentTitle, summary } = this.state.input;
     e.preventDefault();
@@ -114,24 +146,18 @@ export default class App extends Component {
       input: { name: "", email: "", phone: "", currentTitle: "", summary: "" },
     });
   
-    if(e.target.className === 'experience-add-btn'){
-        this.setState({
-          enable:{experience:'enable'}
-        })
-    }
+    // if(e.target.className === 'experience-add-btn'){
+    //     this.setState({
+    //       enable:{experience:'disable'}
+    //     })
+    // }
     
   }
 
-  remove(e){
-   
-    if(e.target.className === 'enable'){
-      this.setState({
-        enable:{experience:'disable'}
-      })
-  }
-  }
+
   render() {
     const { name, email, phone, currentTitle, summary } = this.state.input;
+    
     return (
       <>
         <Personal
@@ -144,23 +170,28 @@ export default class App extends Component {
           summaryValue={summary}
         ></Personal>
 
-       {/* <PersonalOverview inputs={this.state.inputs}></PersonalOverview> */}
-        <Experience
-          addButtonEvent={this.onSubmit}
-          removeButtonEvent = {this.remove}
-          onChange={this.onChange}
-          containerClass = {this.state.enable.experience}
-          buttonClass = {this.state.class.experienceClass}
+        
+         <Experience className1 = {this.state.enable.experience} initialClickEvent={this.addExperience} clickEvent = {this.addExperience}child={
+       this.state.childs.experience}> 
+         
+        </Experience>
 
-          removeButtonClass = {this.state.enable.experience}
-        ></Experience>
 
-        <Education
-          addButtonEvent={this.onSubmit}
-          onChange={this.onChange}
-          containerClass = "disable"
-        ></Education>
+     
       </>
     );
   }
 }
+   {/* <div>
+          <Experience></Experience>
+          <button onClick={this.add}>test </button> 
+            {this.child}
+        </div> */}
+      
+
+
+        {/* <Education
+          addButtonEvent={this.onSubmit}
+          onChange={this.onChange}
+          containerClass = "disable"
+        ></Education> */}
