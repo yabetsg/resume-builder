@@ -1,12 +1,14 @@
 
 import "./styles/App.css";
 import Personal from "./components/Personal";
-import React, { Component, useRef } from "react";
+import React, { Component ,useRef,createRef} from "react";
 import PersonalOverview from "./components/PersonalOverview";
 import Experience from "./components/Experience";
 import Education from "./components/Education";
 import Field from "./components/Field";
 import uniqid from 'uniqid';
+import ExperienceView from "./components/ExperienceView";
+import View from "./components/View";
 
 export default class App extends Component {
   constructor(props) {
@@ -18,16 +20,20 @@ export default class App extends Component {
       },
       class:{experienceClass:'experience-add-btn'},
       enable:{experience:'enable'},
-      childs: {experience:[]}
+      childs: {experience:[],id:0},
+      view:{experience:[{company:''}]},
+      value:{experience:{company0:''}}
     };
+   
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.removeExperience = this.removeExperience.bind(this);
     this.addExperience = this.addExperience.bind(this);
-    
+    this.change = this.change.bind(this);
   }
 
   onChange(e) {
+    
     const { name, email, phone, currentTitle, summary } = this.state.input;
     switch (e.target.className) {
       case "name":
@@ -42,7 +48,12 @@ export default class App extends Component {
         });
 
         break;
-
+        case "Company-Name":
+          this.setState({
+            
+            value:{experience:{company0:e.target.value}}
+          });
+          break;
       case "email":
         this.setState({
           input: {
@@ -90,18 +101,36 @@ export default class App extends Component {
         });
         break;
       default: {
-        this.setState({
-          input: {
-            name: name,
-            email: email,
-            phone: phone,
-            currentTitle: currentTitle,
-            summary: summary,
-          },
-        });
+        // this.setState({
+        //   input: {
+        //     name: name,
+        //     email: email,
+        //     phone: phone,
+        //     currentTitle: currentTitle,
+        //     summary: summary,
+        //   },
+        // });
       }
     }
   }
+  change(e){
+     
+    const id = e.target[0].id;
+    
+    const inputValue = e.target[0].value;
+    
+    
+ 
+    e.preventDefault();
+  this.setState({
+    view:{experience:this.state.view.experience.concat(this.state.view.experience.filter((_,index)=>e.target.id==index)[id].company=inputValue)},
+    value:{experience:{company0:e.target[0].value}}
+  })
+  console.log( this.state.value.experience)
+ 
+  // console.log(this.state.view.experience);
+}
+
     removeExperience(e){
       const sectionId = e.target.parentNode.parentNode.parentNode.parentNode.id;
      // console.log(e.target.parentNode.parentNode.parentNode.parentNode.id);  
@@ -118,15 +147,22 @@ export default class App extends Component {
   }
 
   addExperience(e){
+  
     this.setState({
       childs:{experience:this.state.childs.experience.concat(<Field  placeholder1="Company Name"
       placeholder2="Position" placeholder3="Date From"
       placeholder4="Date Until"
-      placeholder5="Details"  clickEvent = {this.addExperience} removeButtonEvent = {this.removeExperience}></Field>)},
+      placeholder5="Details"  className1="Company-Name"
+      className2="Position" className3="Date-From"
+      className4="Date-Until"
+      className5="Details"  clickEvent = {this.addExperience} removeButtonEvent = {this.removeExperience}  onSubmit = {this.change}  id={this.state.childs.id}></Field>),
+      
+      id:this.state.childs.id+1},
 
-      enable:{experience:'disable'}
+      enable:{experience:'disable'},
+      // childs:{id:this.state.childs.id+1}
     })
-  
+   
    
   }
   onSubmit(e) {
@@ -160,10 +196,11 @@ export default class App extends Component {
     
     return (
       <>
+      <div className="resume-form">
         <Personal
           addButtonEvent={this.onSubmit}
           onChange={this.onChange}
-          nameValue={name}
+           nameValue={name}
           emailValue={email}
           phoneValue={phone}
           currentTitleValue={currentTitle}
@@ -171,14 +208,16 @@ export default class App extends Component {
         ></Personal>
 
         
-         <Experience className1 = {this.state.enable.experience} initialClickEvent={this.addExperience} clickEvent = {this.addExperience}child={
+         <Experience  className1 = {this.state.enable.experience} initialClickEvent={this.addExperience} clickEvent = {this.addExperience}child={
        this.state.childs.experience}> 
          
         </Experience>
-
-
      
-      </>
+      </div>
+          <div className="resume-view">
+             <ExperienceView child={[<View value1={this.state.view.experience[0].company} id = "0" className1 = "Company-Name"></View>]}></ExperienceView>
+          </div>
+          </>
     );
   }
 }

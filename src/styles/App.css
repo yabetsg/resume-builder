@@ -38,7 +38,7 @@
 } */
 #root{
   display: flex;
-  flex-direction: column;
+ 
 }
 
 .group:not(:last-child) .add-btn{
