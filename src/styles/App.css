@@ -36,9 +36,13 @@
     transform: rotate(360deg);
   }
 } */
+
+*{
+  margin:0
+}
 #root{
   display: flex;
- 
+  
 }
 
 .group:not(:last-child) .add-btn{
@@ -57,10 +61,34 @@
 }
 header{
   width: 150px;
+  margin-bottom: 20px;
 }
 .disable{
   display: none;
 }
 .enable{
   display: block;
+}
+.container-1{
+  display: flex;
+  width: 500px;
+  justify-content: space-between;
+}
+.dateFrom::after{
+  content: ' - ';
+  
+}
+.companyName{
+  font-weight: bold;
+  color: #377ea4;;
+}
+.position{
+  font-weight: lighter;
+  font-style: italic;
+}
+.dateUntil::before{
+  content: "\00a0 ";
+}
+.date{
+  display: flex;
 }
