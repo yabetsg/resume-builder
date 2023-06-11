@@ -16,17 +16,20 @@ export default class App extends Component {
     this.state = {
       input: { name: "", email: "", phone: "", currentTitle: "", summary: "" },
       experienceInput:{company:"",position:'',dateFrom:'',dateUntil:'',details:''},
-     
+      experienceInput2:{company:"",position:'',dateFrom:'',dateUntil:'',details:''},
+      educationInput:{school:"",major:'',dateFromEducation:'',dateUntilEducation:'',location:''},
+      educationInput2:{school:"",major:'',dateFromEducation:'',dateUntilEducation:'',location:''},
       inputs: {
-        personal: [],experience:[]
+        personal: [],experience:[],experience2:[],education:[],education2:[]
       },
       class:{experienceClass:'experience-add-btn'},
       enable:{experience:'enable'},
       childs: {experience:[],id:0},
       view:{experience:[],personal:[]},
       value:{experience:[]},
-      viewChilds:{personal:[],experience:[]},
-      test:''
+      viewChilds:{personal:[],experience:[],experience2:[],education:[],education2:[]},
+     
+  
     };
   // [{company:'',position:'',dateFrom:'',dateUntil:'',details:''},
       // {company:'',position:'',dateFrom:'',dateUntil:'',details:''},
@@ -41,104 +44,134 @@ export default class App extends Component {
   }
 
   onChange(e) {
-    
     const { name, email, phone, currentTitle, summary } = this.state.input;
     const id = e.target.id;
-    //const filtered = this.state.experienceInput.filter((_,index)=>id==index)[0]
-   //console.log(e.target.value);
-    switch (e.target.className) {
+    const className = e.target.className;
+  
+    const updatedExperienceInput = {
+      company: this.state.experienceInput.company,
+      position: this.state.experienceInput.position,
+      dateFrom: this.state.experienceInput.dateFrom,
+      dateUntil: this.state.experienceInput.dateUntil,
+      details: this.state.experienceInput.details,
+    };
+  
+    const updatedExperienceInput2 = {
+      company: this.state.experienceInput2.company,
+      position: this.state.experienceInput2.position,
+      dateFrom: this.state.experienceInput2.dateFrom,
+      dateUntil: this.state.experienceInput2.dateUntil,
+      details: this.state.experienceInput2.details,
+    };
+  
+    const updatedEducationInput = {
+      school: this.state.educationInput.school,
+      major: this.state.educationInput.major,
+      dateFromEducation: this.state.educationInput.dateFromEducation,
+      dateUntilEducation: this.state.educationInput.dateUntilEducation,
+      location: this.state.educationInput.location,
+    };
+  
+    const updatedEducationInput2 = {
+      school: this.state.educationInput2.school,
+      major: this.state.educationInput2.major,
+      dateFromEducation: this.state.educationInput2.dateFromEducation,
+      dateUntilEducation: this.state.educationInput2.dateUntilEducation,
+      location: this.state.educationInput2.location,
+    };
+  
+    switch (className) {
       case "name":
-        this.setState({
-          input: {
-            name: e.target.value,
-            email: email,
-            phone: phone,
-            currentTitle: currentTitle,
-            summary: summary,
-          },
-        });
-
+        this.setState({ input: { ...this.state.input, name: e.target.value } });
         break;
-       
-       
       case "email":
-        this.setState({
-          input: {
-            name: name,
-            email: e.target.value,
-            phone: phone,
-            currentTitle: currentTitle,
-            summary: summary,
-          },
-        });
-
+        this.setState({ input: { ...this.state.input, email: e.target.value } });
         break;
-
       case "phone":
-        this.setState({
-          input: {
-            name: name,
-            email: email,
-            phone: e.target.value,
-            currentTitle: currentTitle,
-            summary: summary,
-          },
-        });
+        this.setState({ input: { ...this.state.input, phone: e.target.value } });
         break;
       case "current-title":
-        this.setState({
-          input: {
-            name: name,
-            email: email,
-            phone: phone,
-            currentTitle: e.target.value,
-            summary: summary,
-          },
-        });
+        this.setState({ input: { ...this.state.input, currentTitle: e.target.value } });
         break;
       case "summary":
-        this.setState({
-          input: {
-            name: name,
-            email: email,
-            phone: phone,
-            currentTitle: currentTitle,
-            summary: e.target.value,
-          },
-        });
+        this.setState({ input: { ...this.state.input, summary: e.target.value } });
         break;
-        case "Company-Name":
-        this.setState({
-          experienceInput: {
-            company:e.target.value,
-            position:this.state.experienceInput.position,
-            dateFrom:this.state.experienceInput.dateFrom,
-            dateUntil:this.state.experienceInput.dateUntil,
-            details:this.state.experienceInput.details}
-        });
-        // TODO: FIX THIS
+      case "Company-Name":
+        if (id == 0) {
+          this.setState({ experienceInput: { ...updatedExperienceInput, company: e.target.value } });
+        } else {
+          this.setState({ experienceInput2: { ...updatedExperienceInput2, company: e.target.value } });
+        }
         break;
-      default: {
-        // this.setState({
-        //   input: {
-        //     name: name,
-        //     email: email,
-        //     phone: phone,
-        //     currentTitle: currentTitle,
-        //     summary: summary,
-        //   },
-        // });
-      }
+      case "Position":
+        if (id == 0) {
+          this.setState({ experienceInput: { ...updatedExperienceInput, position: e.target.value } });
+        } else {
+          this.setState({ experienceInput2: { ...updatedExperienceInput2, position: e.target.value } });
+        }
+        break;
+      case "Date-From":
+        if (id == 0) {
+          this.setState({ experienceInput: { ...updatedExperienceInput, dateFrom: e.target.value } });
+        } else {
+          this.setState({ experienceInput2: { ...updatedExperienceInput2, dateFrom: e.target.value } });
+        }
+        break;
+      case "Date-Until":
+        if (id == 0) {
+          this.setState({ experienceInput: { ...updatedExperienceInput, dateUntil: e.target.value } });
+        } else {
+          this.setState({ experienceInput2: { ...updatedExperienceInput2, dateUntil: e.target.value } });
+        }
+        break;
+      case "Details":
+        if (id == 0) {
+          this.setState({ experienceInput: { ...updatedExperienceInput, details: e.target.value } });
+        } else {
+          this.setState({ experienceInput2: { ...updatedExperienceInput2, details: e.target.value } });
+        }
+        break;
+      case "School-Name":
+        if (id == 0) {
+          this.setState({ educationInput: { ...updatedEducationInput, school: e.target.value } });
+        } else {
+          this.setState({ educationInput2: { ...updatedEducationInput2, school: e.target.value } });
+        }
+        break;
+      case "Major":
+        if (id == 0) {
+          this.setState({ educationInput: { ...updatedEducationInput, major: e.target.value } });
+        } else {
+          this.setState({ educationInput2: { ...updatedEducationInput2, major: e.target.value } });
+        }
+        break;
+      case "Date-From-Education":
+        if (id == 0) {
+          this.setState({ educationInput: { ...updatedEducationInput, dateFromEducation: e.target.value } });
+        } else {
+          this.setState({ educationInput2: { ...updatedEducationInput2, dateFromEducation: e.target.value } });
+        }
+        break;
+      case "Date-Until-Education":
+        if (id == 0) {
+          this.setState({ educationInput: { ...updatedEducationInput, dateUntilEducation: e.target.value } });
+        } else {
+          this.setState({ educationInput2: { ...updatedEducationInput2, dateUntilEducation: e.target.value } });
+        }
+        break;
+      case "Location":
+        if (id == 0) {
+          this.setState({ educationInput: { ...updatedEducationInput, location: e.target.value } });
+        } else {
+          this.setState({ educationInput2: { ...updatedEducationInput2, location: e.target.value } });
+        }
+        break;
+      default:
+        break;
     }
-
-    // this.setState({
-    //   viewChilds: {
-    //     personal: [name,email,phone,currentTitle,summary]
-    //   }
-    //   // input: { name: "", email: "", phone: "", currentTitle: "", summary: "" },
-     
-    // });
   }
+  
+  
   changeEvent(e){
     console.log(e.target.value);
     this.setState({
@@ -148,7 +181,7 @@ export default class App extends Component {
   }
   
   submitEvent(e){
-      e.preventDefault();
+    e.preventDefault();
     const map = new Map();
     
     for(let i=0;i<5;i++){
@@ -258,13 +291,9 @@ export default class App extends Component {
     let details = `details${id}`
     //console.log(id);
     this.setState({
-      childs:{experience:this.state.childs.experience.concat(<Field  placeholder1="Company Name"
-      placeholder2="Position" placeholder3="Date From"
-      placeholder4="Date Until"
-      placeholder5="Details"  className1="Company-Name"
-      className2="Position" className3="Date-From"
-      className4="Date-Until"
-      className5="Details"  clickEvent = {this.addExperience} removeButtonEvent = {this.removeExperience}  onSubmit = {this.submitEvent}  id={this.state.childs.id}></Field>),
+      childs:{experience:this.state.childs.experience.concat(<Experience onSubmit = {this.onSubmit} onChange = {this.onChange} value1={this.state.experienceInput.company} value2={this.state.experienceInput.position} value3={this.state.experienceInput.dateFrom} value4={this.state.experienceInput.dateUntil} value5={this.state.experienceInput.details}   initialClickEvent={this.addExperience} clickEvent = {this.addExperience}> 
+
+        </Experience>),
       
       id:this.state.childs.id+1},
 
@@ -280,7 +309,8 @@ export default class App extends Component {
   onSubmit(e) {
     e.preventDefault();
     const { name, email, phone, currentTitle, summary } = this.state.input;
-    const {company} = this.state.experienceInput;
+    const {company,position,dateFrom,dateUntil,details} = this.state.experienceInput;
+    const {school,major,dateFromEducation,dateUntilEducation,location} = this.state.educationInput;
     const id = this.state.childs.id;
     
 
@@ -293,7 +323,9 @@ export default class App extends Component {
           currentTitle,
           summary
         ),
-         experience:this.state.inputs.experience.concat(company)
+         experience:this.state.inputs.experience.concat(company,position,dateFrom,dateUntil,details),
+         experience2:this.state.inputs.experience2.concat(this.state.experienceInput2.company,this.state.experienceInput2.position,this.state.experienceInput2.dateFrom,this.state.experienceInput2.dateUntil,this.state.experienceInput2.details),
+         education:this.state.inputs.education.concat(school,major,dateFromEducation,dateUntilEducation,location)
       },
     
      
@@ -306,8 +338,14 @@ export default class App extends Component {
   render() {
     const { name, email, phone, currentTitle, summary } = this.state.input;
     //console.log(this.state.viewChilds.personal.length==0);
+    // const primaryExp = this.state.experienceInput?.filter((_,index)=>0==index)[0]
+    // const secondaryExp = this.state.experienceInput?.filter((_,index)=>1==index)[0]
+    // const {company,position,dateFrom,dateUntil,details} = primaryExp;
+    // const {company2,position2,dateFrom2,dateUntil2,details2} = secondaryExp;
+    
     return (
       <>
+     
       <div className="resume-form">
         <Personal
         onSubmit = {this.onSubmit}
@@ -319,19 +357,37 @@ export default class App extends Component {
           currentTitleValue={currentTitle}
           summaryValue={summary}
         ></Personal>
-      
         
-         <Experience onSubmit = {this.onSubmit} onChange = {this.onChange} value1={this.state.experienceInput.company} initialClickEvent={this.addExperience} clickEvent = {this.addExperience}> 
+        
+         <Experience id={0} onSubmit = {this.onSubmit} onChange = {this.onChange} value1={this.state.experienceInput.company} value2={this.state.experienceInput.position} value3={this.state.experienceInput.dateFrom} value4={this.state.experienceInput.dateUntil} value5={this.state.experienceInput.details}   initialClickEvent={this.addExperience} clickEvent = {this.addExperience}> 
          
         </Experience>
+        <Experience id={1} onSubmit = {this.onSubmit} onChange = {this.onChange}  value1={this.state.experienceInput2.company} value2={this.state.experienceInput2.position} value3={this.state.experienceInput2.dateFrom} value4={this.state.experienceInput2.dateUntil} value5={this.state.experienceInput2.details}    initialClickEvent={this.addExperience} clickEvent = {this.addExperience}> 
+         
+        </Experience>
+
+        <Education id={0} onSubmit = {this.onSubmit} onChange = {this.onChange}  value1={this.state.educationInput.school} value2={this.state.educationInput.major} value3={this.state.educationInput.dateFromEducation} value4={this.state.educationInput.dateUntilEducation} value5={this.state.educationInput.location}    initialClickEvent={this.addExperience} clickEvent = {this.addExperience}> 
+         
+        </Education>
+        {/* <Education id={1} onSubmit = {this.onSubmit} onChange = {this.onChange}  value1={this.state.educationInput2.school} value2={this.state.educationInput2.major} value3={this.state.educationInput2.dateFromEducation} value4={this.state.educationInput2.dateUntilEducation} value5={this.state.educationInput2.location}    initialClickEvent={this.addExperience} clickEvent = {this.addExperience}> 
+
+        </Education> */}
+
+        
      
       </div>
           <div className="resume-view"> 
-         
             {
              <ExperienceView  child={this.state.viewChilds.personal}></ExperienceView>}
+              <View className1='companyName' className2='position'  className3= 'dateFrom' className4='dateUntil' className5='details' value0 = {this.state.experienceInput.company } value1 = {this.state.experienceInput.position} value2 = {this.state.experienceInput.dateFrom} value3 = {this.state.experienceInput.dateUntil} value4 = {this.state.experienceInput.details} ></View>
+              <View className1='companyName' className2='position'  className3= 'dateFrom' className4='dateUntil' className5='details' value0 = {this.state.experienceInput2.company } value1 = {this.state.experienceInput2.position} value2 = {this.state.experienceInput2.dateFrom} value3 = {this.state.experienceInput2.dateUntil} value4 = {this.state.experienceInput2.details} ></View>
+
               {
              <ExperienceView  child={this.state.viewChilds.experience}></ExperienceView>}
+               {
+             <ExperienceView  child={this.state.viewChilds.experience2}></ExperienceView>}
+              {
+             <ExperienceView  child={this.state.viewChilds.education}></ExperienceView>}
 {/*              
             {(this.state.view.experience?.length!=0)?
              (<ExperienceView title={"Experience"}  child={this.state.viewChilds.experience}></ExperienceView>):''} */}

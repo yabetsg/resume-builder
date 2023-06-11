@@ -7,7 +7,7 @@ export default class Experience extends Component {
     super(props);
   }
   render() {
-    const { onChange,onSubmit, value1, id, addButtonEvent, removeButtonEvent, className1, className2, className3, className4, className5,containerClass,buttonClass, removeButtonClass , child, initialClickEvent} = this.props;
+    const { onChange,onSubmit, value1, value2, value3, value4, value5, id, addButtonEvent, removeButtonEvent, className1, className2, className3, className4, className5,containerClass,buttonClass, removeButtonClass , child, initialClickEvent} = this.props;
     return (
       <section   className="experience ">
         <div >Work Experience</div>
@@ -31,6 +31,11 @@ export default class Experience extends Component {
           onChange={onChange}
           onSubmit={onSubmit}
           value1={value1}
+          value2={value2}
+          value3={value3}
+          value4={value4}
+          value5={value5}
+          id={id}
           // value2={emailValue}
           // value3={phoneValue}
           // value4={currentTitleValue}
