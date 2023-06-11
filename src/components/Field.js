@@ -21,7 +21,7 @@ export default class Field extends Component{
                 <input placeholder={placeholder5} className={className5} onChange={onChange} value = {value5} id ={id}></input>
                 
                 <div>
-                <button type="button" onClick = {clickEvent} className={'add-btn'}>Add</button>
+                {/* <button type="button" onClick = {clickEvent} className={'add-btn'}>Add</button> */}
                 <button type="button" onClick={removeButtonEvent} className={'remove-btn'}>Remove</button>
                 <button type="submit" className={'save-btn'}>Save</button>
                 </div>

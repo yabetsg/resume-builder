@@ -13,6 +13,7 @@ export default class Personal extends Component {
       this.props;
     return (
       <section className="personal-details">
+        <div>Personal Details</div>
         <Field
           header = "Peronal Details"
           placeholder1="Name"

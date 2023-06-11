@@ -6,10 +6,8 @@ export default class ExperienceView extends Component{
         return(
             
             <div className="experience-view">
-
-            
             <header>{title}</header>
-            {child.map((element,index)=>{return <div id={index} key={index}>{element}</div>})}
+            {child?.map((element,index)=>{return <div id={index} key={index}>{element}</div>})}
              
               
          </div>

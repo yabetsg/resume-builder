@@ -15,6 +15,8 @@ export default class App extends Component {
     super(props);
     this.state = {
       input: { name: "", email: "", phone: "", currentTitle: "", summary: "" },
+      experienceInput:{company:"",position:'',dateFrom:'',dateUntil:'',details:''},
+     
       inputs: {
         personal: [],experience:[]
       },
@@ -22,11 +24,13 @@ export default class App extends Component {
       enable:{experience:'enable'},
       childs: {experience:[],id:0},
       view:{experience:[],personal:[]},
-      value:{experience:[{company0:''}]},
+      value:{experience:[]},
       viewChilds:{personal:[],experience:[]},
       test:''
     };
-   
+  // [{company:'',position:'',dateFrom:'',dateUntil:'',details:''},
+      // {company:'',position:'',dateFrom:'',dateUntil:'',details:''},
+      // {company:'',position:'',dateFrom:'',dateUntil:'',details:''}]
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.removeExperience = this.removeExperience.bind(this);
@@ -39,6 +43,9 @@ export default class App extends Component {
   onChange(e) {
     
     const { name, email, phone, currentTitle, summary } = this.state.input;
+    const id = e.target.id;
+    //const filtered = this.state.experienceInput.filter((_,index)=>id==index)[0]
+   //console.log(e.target.value);
     switch (e.target.className) {
       case "name":
         this.setState({
@@ -100,6 +107,17 @@ export default class App extends Component {
           },
         });
         break;
+        case "Company-Name":
+        this.setState({
+          experienceInput: {
+            company:e.target.value,
+            position:this.state.experienceInput.position,
+            dateFrom:this.state.experienceInput.dateFrom,
+            dateUntil:this.state.experienceInput.dateUntil,
+            details:this.state.experienceInput.details}
+        });
+        // TODO: FIX THIS
+        break;
       default: {
         // this.setState({
         //   input: {
@@ -113,19 +131,13 @@ export default class App extends Component {
       }
     }
 
-    this.setState({
-      viewChilds: {
-        personal: this.state.viewChilds.personal.concat(
-          name,
-          email,
-          phone,
-          currentTitle,
-          summary
-        ),
-      },
-      // input: { name: "", email: "", phone: "", currentTitle: "", summary: "" },
+    // this.setState({
+    //   viewChilds: {
+    //     personal: [name,email,phone,currentTitle,summary]
+    //   }
+    //   // input: { name: "", email: "", phone: "", currentTitle: "", summary: "" },
      
-    });
+    // });
   }
   changeEvent(e){
     console.log(e.target.value);
@@ -175,19 +187,24 @@ export default class App extends Component {
     filtered.set(dateUntil,this.store[map.get('id0')].get(`value${3}`));
     filtered.set(details,this.store[map.get('id0')].get(`value${4}`));
    
-    if(this.state.viewChilds.experience.length==0){
+    if(this.state.viewChilds.experience?.length==0){
           this.state.viewChilds.experience.splice(map.get('id0'),0,<View className1='companyName' className2='position'  className3= 'dateFrom' className4='dateUntil' className5='details' value0 = {this.state.view.experience[id].get(company) } value1 = {this.state.view.experience[id].get(position)} value2 = {this.state.view.experience[id].get(dateFrom)} value3 = {this.state.view.experience[id].get(dateUntil)} value4 = {this.state.view.experience[id].get(details)} ></View>)
-    }else{
-      this.state.viewChilds.experience.splice(map.get('id0'),1,<View className1='companyName' className2='position'  className3= 'dateFrom' className4='dateUntil' className5='details' value0 = {this.state.view.experience[id].get(company) } value1 = {this.state.view.experience[id].get(position)} value2 = {this.state.view.experience[id].get(dateFrom)} value3 = {this.state.view.experience[id].get(dateUntil)} value4 = {this.state.view.experience[id].get(details)} ></View>)
-
+          console.log('if');
+        }else if(this.state.viewChilds.experience?.length>0){
+      this.state.viewChilds.experience?.splice(map.get('id0'),1,<View className1='companyName' className2='position'  className3= 'dateFrom' className4='dateUntil' className5='details' value0 = {this.state.view.experience[id].get(company) } value1 = {this.state.view.experience[id].get(position)} value2 = {this.state.view.experience[id].get(dateFrom)} value3 = {this.state.view.experience[id].get(dateUntil)} value4 = {this.state.view.experience[id].get(details)} ></View>)
+          console.log('else');
     }
-  this.setState({
-    view:{experience:this.state.view.experience.concat(filtered)},
+    console.log(this.state.viewChilds.experience);
+  this.setState((prevStates)=>({
+    ...prevStates,
+  
+    view:{experience:this.state.view.experience?.concat(filtered)},
     value:{experience:{company0:e.target[0].value}},
     viewChilds:{experience:this.state.viewChilds.experience},
    // viewChilds:{experience:this.state.viewChilds.experience.concat(<View value0 = {this.state.view.experience[id].get(company) } value1 = {this.state.view.experience[id].get(position)} value2 = {this.state.view.experience[id].get(dateFrom)} value3 = {this.state.view.experience[id].get(dateUntil)} value4 = {this.state.view.experience[id].get(details)} ></View>)}
-
-  })
+    
+  }))  
+  console.log(this.state.viewChilds.experience)
 ///console.log(this.state.viewChilds.experience);
 
   //console.log(e.target[0])
@@ -239,7 +256,7 @@ export default class App extends Component {
     let dateFrom = `dateFrom${id}`
     let dateUntil = `dateUntil${id}`
     let details = `details${id}`
-    console.log(id);
+    //console.log(id);
     this.setState({
       childs:{experience:this.state.childs.experience.concat(<Field  placeholder1="Company Name"
       placeholder2="Position" placeholder3="Date From"
@@ -247,7 +264,7 @@ export default class App extends Component {
       placeholder5="Details"  className1="Company-Name"
       className2="Position" className3="Date-From"
       className4="Date-Until"
-      className5="Details" value1={(this.state.test!=='')?this.state.test:undefined} clickEvent = {this.addExperience} removeButtonEvent = {this.removeExperience}  onSubmit = {this.submitEvent}  id={this.state.childs.id}></Field>),
+      className5="Details"  clickEvent = {this.addExperience} removeButtonEvent = {this.removeExperience}  onSubmit = {this.submitEvent}  id={this.state.childs.id}></Field>),
       
       id:this.state.childs.id+1},
 
@@ -263,6 +280,7 @@ export default class App extends Component {
   onSubmit(e) {
     e.preventDefault();
     const { name, email, phone, currentTitle, summary } = this.state.input;
+    const {company} = this.state.experienceInput;
     const id = this.state.childs.id;
     
 
@@ -275,16 +293,12 @@ export default class App extends Component {
           currentTitle,
           summary
         ),
+         experience:this.state.inputs.experience.concat(company)
       },
-      // input: { name: "", email: "", phone: "", currentTitle: "", summary: "" },
+    
      
     });
-    
-    // if(e.target.className === 'experience-add-btn'){
-    //     this.setState({
-    //       enable:{experience:'disable'}
-    //     })
-    // }
+  
     
   }
 
@@ -307,19 +321,20 @@ export default class App extends Component {
         ></Personal>
       
         
-         <Experience  className1 = {this.state.enable.experience} initialClickEvent={this.addExperience} clickEvent = {this.addExperience}child={
-       this.state.childs.experience}> 
+         <Experience onSubmit = {this.onSubmit} onChange = {this.onChange} value1={this.state.experienceInput.company} initialClickEvent={this.addExperience} clickEvent = {this.addExperience}> 
          
         </Experience>
      
       </div>
           <div className="resume-view"> 
          
-            {/* {
-             <ExperienceView  child={this.state.viewChilds.personal}></ExperienceView>} */}
-             
-            {(this.state.view.experience.length!=0)?
-             (<ExperienceView title={"Experience"}  child={this.state.viewChilds.experience}></ExperienceView>):console.log('default')}
+            {
+             <ExperienceView  child={this.state.viewChilds.personal}></ExperienceView>}
+              {
+             <ExperienceView  child={this.state.viewChilds.experience}></ExperienceView>}
+{/*              
+            {(this.state.view.experience?.length!=0)?
+             (<ExperienceView title={"Experience"}  child={this.state.viewChilds.experience}></ExperienceView>):''} */}
             
           
           </div>
