@@ -22,8 +22,8 @@ export default class Field extends Component{
                 
                 <div>
                 {/* <button type="button" onClick = {clickEvent} className={'add-btn'}>Add</button> */}
-                <button type="button" onClick={removeButtonEvent} className={'remove-btn'}>Remove</button>
-                <button type="submit" className={'save-btn'}>Save</button>
+                {/* <button type="button" onClick={removeButtonEvent} className={'remove-btn'}>Remove</button> */}
+                {/* <button type="submit" className={'save-btn'}>Save</button> */}
                 </div>
              </div>
                 </form>
